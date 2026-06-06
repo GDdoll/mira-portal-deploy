@@ -462,10 +462,10 @@
   <div class="topic-grid">
     <button class="topic-chip" onclick="selectTopic('Agent 创建与使用','Agent Creation & Usage')"><span class="chip-icon">🤖</span><span data-zh="Agent 创建与使用" data-en="Agent Creation & Usage">Agent 创建与使用</span></button>
     <button class="topic-chip" onclick="selectTopic('Skill 创建与使用','Skill Creation & Usage')"><span class="chip-icon">🛠</span><span data-zh="Skill 创建与使用" data-en="Skill Creation & Usage">Skill 创建与使用</span></button>
-    <button class="topic-chip" onclick="selectTopic('SGlang 部署框架研究','SGlang Deployment Framework')"><span class="chip-icon">⚡</span><span data-zh="SGlang 部署框架" data-en="SGlang Framework">SGlang 部署框架</span></button>
+    <button class="topic-chip" onclick="selectTopic('sglang框架学习','SGLang Framework Learning')"><span class="chip-icon">⚡</span><span data-zh="sglang框架学习" data-en="SGLang Framework Learning">sglang框架学习</span></button>
     <button class="topic-chip" onclick="selectTopic('AI Coding 方法论','AI Coding Methodology')"><span class="chip-icon">💻</span><span data-zh="AI Coding 方法论" data-en="AI Coding Methodology">AI Coding 方法论</span></button>
     <button class="topic-chip" onclick="selectTopic('AI 与哲学','AI & Philosophy')"><span class="chip-icon">🧠</span><span data-zh="AI 与哲学" data-en="AI & Philosophy">AI 与哲学</span></button>
-    <button class="topic-chip" onclick="selectTopic('机器学习','Machine Learning')"><span class="chip-icon">📊</span><span data-zh="机器学习" data-en="Machine Learning">机器学习</span></button>
+    <button class="topic-chip" onclick="selectTopic('邀请Hackthon','Invite Hackathon')"><span class="chip-icon">📊</span><span data-zh="邀请Hackthon" data-en="Invite Hackathon">邀请Hackthon</span></button>
   </div>
   <button class="back-btn" onclick="showPage('page-main')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3L5 7l4 4"/></svg> <span data-zh="返回菜单" data-en="Back">返回菜单</span></button>
 </div>
@@ -1169,23 +1169,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function stopCam() {
       camActive = false;
-      // Actually stop the camera stream to turn off the webcam light
-      if (camStream) {
-        camStream.getTracks().forEach(function(track) { track.stop(); });
-        camStream = null;
-      }
-      if (camVideo) {
-        camVideo.pause();
-        camVideo.srcObject = null;
-        camVideo.remove();
-        camVideo = null;
-      }
+      // Pause video but keep stream alive so startCam() can resume via fast path
+      if (camVideo) camVideo.pause();
       if (hlCard) { hlCard.classList.remove('highlighted'); hlCard = null; }
       handCursor.classList.remove('active', 'pinch', 'open');
       handCursor2.classList.remove('active');
       pinchRing.classList.remove('active');
       isPinching = false;
       isMerging = false;
+      prevHandY = null;
       document.getElementById('cam-indicator').classList.remove('active');
       document.getElementById('cam-indicator').classList.add('off');
       document.getElementById('cam-text').textContent = lang === 'en' ? 'Magic eye off' : '魔法眼睛已关';
