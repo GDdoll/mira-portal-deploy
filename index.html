@@ -681,8 +681,8 @@ function setLang(l) {
     void cat.offsetWidth;
     cat.classList.add('jiggle');
     catClicks++;
-    // 3次点击猫咪提示双爪合并
-    if (catClicks === 3 && !patHintShown && camActive) {
+    // 点击猫咪1次提示双爪合并
+    if (catClicks === 1 && !patHintShown) {
       patHintShown = true;
       var hint = document.createElement('div');
       hint.className = 'paw-hint';
