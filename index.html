@@ -259,6 +259,19 @@
   }
   .cam-indicator.off { border-color: #ddd; color: #aaa; }
   .cam-indicator.off .cam-dot { background: #ccc; animation: none; }
+  .paw-hint {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+    z-index: 200; background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(184,160,255,.4); border-radius: 24px;
+    padding: 10px 24px; font-size: 14px; color: #7b5ed6;
+    font-family: var(--font-cn); white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(123,94,214,.15);
+    opacity: 0; transition: all .5s cubic-bezier(.34,1.56,.64,1);
+    pointer-events: none;
+  }
+  .paw-hint.show {
+    opacity: 1; transform: translateX(-50%) translateY(0);
+  }
   .fortune-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: 200; display: flex; align-items: center; justify-content: center;
@@ -879,6 +892,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var isMerging = false, mergeStartTime = 0, MERGE_HOLD_MS = 1500;
   var colorInverted = false;
   var prevHandY = null;
+  var patCount = 0, wasInTopZone = false, patHintShown = false;
   var pinchRing = document.getElementById('pinch-ring');
 
   var FORTUNES = [
@@ -1088,6 +1102,24 @@ document.addEventListener('DOMContentLoaded', function() {
           if (document.getElementById('page-main') && document.getElementById('page-main').classList.contains('active')) {
             selectByY(hy);
           }
+          // Pat detection: hand in top 20% of viewport = patting the cat
+          var inTopZone = hy < H * 0.2;
+          if (inTopZone && !wasInTopZone) {
+            patCount++;
+            if (patCount >= 4 && !patHintShown) {
+              patHintShown = true;
+              var hint = document.createElement('div');
+              hint.className = 'paw-hint';
+              hint.textContent = '试试双爪合并..好像有魔法？';
+              document.body.appendChild(hint);
+              requestAnimationFrame(function() { hint.classList.add('show'); });
+              setTimeout(function() {
+                hint.classList.remove('show');
+                setTimeout(function() { hint.remove(); }, 600);
+              }, 4000);
+            }
+          }
+          wasInTopZone = inTopZone;
         } else if (gk === 'pinch') {
           // Pinch hold: show ring, count time, click at cursor after 0.8s
           if (!isPinching && !clickCooldown) {
