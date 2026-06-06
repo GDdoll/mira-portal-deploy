@@ -872,7 +872,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // ---- MediaPipe ----
-  var camStream = null, camVideo = null, camActive = false, mpHands = null;
+  var camStream = null, camVideo = null, camActive = false, mpHands = null, loopGen = 0;
   var fortuneCooldown = false;
   var isPinching = false, pinchStartTime = 0, PINCH_HOLD_MS = 800;
   var clickCooldown = false;
@@ -1128,14 +1128,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function startCam() {
+      loopGen++;
+      var myGen = loopGen;
       if (camStream) {
         camActive = true;
-        // Restart video and processing loop
         if (camVideo) {
           camVideo.play().catch(function(){});
           (function loop() {
+            if (myGen !== loopGen) return;
             if (!camActive) { requestAnimationFrame(loop); return; }
-            mpHands.send({ image: camVideo }).then(function() { if (camActive && !camVideo.paused) requestAnimationFrame(loop); }).catch(function(){});
+            mpHands.send({ image: camVideo }).then(function() { if (myGen === loopGen && camActive && !camVideo.paused) requestAnimationFrame(loop); }).catch(function(){});
           })();
         }
         document.getElementById('cam-indicator').classList.add('active');
@@ -1145,6 +1147,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 320, height: 240 } })
         .then(function(stream) {
+          if (myGen !== loopGen) { stream.getTracks().forEach(function(t) { t.stop(); }); return; }
           camStream = stream;
           camVideo = document.createElement('video');
           camVideo.srcObject = stream; camVideo.setAttribute('playsinline', ''); camVideo.muted = true; camVideo.style.display = 'none';
@@ -1156,8 +1159,9 @@ document.addEventListener('DOMContentLoaded', function() {
           camVideo.onloadeddata = function() {
             camVideo.play();
             (function loop() {
+              if (myGen !== loopGen) return;
               if (!camActive) { requestAnimationFrame(loop); return; }
-              mpHands.send({ image: camVideo }).then(function() { if (camActive && !camVideo.paused) requestAnimationFrame(loop); }).catch(function(){});
+              mpHands.send({ image: camVideo }).then(function() { if (myGen === loopGen && camActive && !camVideo.paused) requestAnimationFrame(loop); }).catch(function(){});
             })();
           };
         })
@@ -1169,8 +1173,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function stopCam() {
       camActive = false;
-      // Pause video but keep stream alive so startCam() can resume via fast path
-      if (camVideo) camVideo.pause();
+      loopGen++; // kill any running processing loops
+      if (camStream) {
+        camStream.getTracks().forEach(function(track) { track.stop(); });
+        camStream = null;
+      }
+      if (camVideo) {
+        camVideo.pause();
+        camVideo.srcObject = null;
+        camVideo.remove();
+        camVideo = null;
+      }
       if (hlCard) { hlCard.classList.remove('highlighted'); hlCard = null; }
       handCursor.classList.remove('active', 'pinch', 'open');
       handCursor2.classList.remove('active');
