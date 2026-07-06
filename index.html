@@ -118,6 +118,8 @@
   .t-friend:hover { border-color: var(--accent); }
   .t-english .card-cat { background: var(--purple-light); }
   .t-english:hover { border-color: var(--purple); }
+  .t-adopt .card-cat { background: #FFE4EC; }
+  .t-adopt:hover { border-color: #FF8FAB; }
 
   /* ---- SUB PAGES ---- */
   .result-wrap {
@@ -201,6 +203,7 @@
   @keyframes blink { 0%,90%,100%{transform:scaleY(1);} 95%{transform:scaleY(.08);} }
   @keyframes tailWag { 0%,100%{transform:rotate(0);} 30%{transform:rotate(15deg);} 70%{transform:rotate(-10deg);} }
   @keyframes tailSway { 0%,100%{transform:rotate(0);} 25%{transform:rotate(10deg);} 50%{transform:rotate(-8deg);} 75%{transform:rotate(12deg);} }
+  @keyframes adoptBounce { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-8px) scale(1.05);} }
 
   .steam { animation: steamRise 2s ease-in-out infinite; }
   .steam:nth-child(2) { animation-delay: .6s; }
@@ -440,6 +443,18 @@
     </div>
     <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
   </div>
+
+  <!-- ===== CARD 6: Adopt DeskMira ===== -->
+  <div class="option-card t-adopt" onclick="showPage('page-adopt')">
+    <div class="card-cat">
+      <span style="font-size:36px;line-height:60px;display:block;text-align:center">🐱</span>
+    </div>
+    <div class="card-body">
+      <h3 data-zh="我想领养一只 DeskMira！" data-en="I want to adopt a DeskMira!">我想领养一只 DeskMira！</h3>
+      <p data-zh="桌面猫咪小精灵，陪你工作摸鱼" data-en="Desktop cat sprite, your work buddy">桌面猫咪小精灵，陪你工作摸鱼</p>
+    </div>
+    <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+  </div>
 </div>
 
 <!-- ============ COFFEE PAGE ============ -->
@@ -560,6 +575,20 @@
     <p class="desc" data-zh="点击下方按钮加入飞书英语角群" data-en="Click below to join the Feishu English Corner group">点击下方按钮加入飞书英语角群</p>
     <button class="action-btn" onclick="goEnglishCorner()" style="margin-bottom:16px;" data-zh="加入英语角群" data-en="Join English Corner">加入英语角群</button><br/>
     <button class="back-btn" onclick="showPage('page-main')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3L5 7l4 4"/></svg> <span data-zh="返回菜单" data-en="Back">返回菜单</span></button>
+  </div>
+</div>
+
+<!-- ============ ADOPT DESKMIRA PAGE ============ -->
+<div class="page" id="page-adopt">
+  <div class="result-wrap" style="position:relative;overflow:hidden;">
+    <div style="font-size:72px;margin-bottom:10px;animation:adoptBounce 2s ease-in-out infinite;">🐱</div>
+    <h2 data-zh="领养 DeskMira" data-en="Adopt DeskMira">领养 DeskMira</h2>
+    <div style="margin:16px auto;padding:16px 20px;background:linear-gradient(135deg,#FFE4EC,#FFF0F5);border-radius:16px;border:1.5px dashed #FF8FAB;max-width:280px;">
+      <p style="font-size:13px;color:#FF6B8A;margin-bottom:8px;" data-zh="喵～功能开发中..." data-en="Meow~ Coming soon...">喵～功能开发中...</p>
+      <p style="font-size:11px;color:#999;" data-zh="桌面猫咪小精灵暂未上线，敬请期待！" data-en="DeskMira desktop cat sprite is not yet available. Stay tuned!">桌面猫咪小精灵暂未上线，敬请期待！</p>
+    </div>
+    <p style="font-size:10px;color:#ccc;margin-top:8px;" data-zh="Mira 正在努力开发中，马上就能领养啦" data-en="Mira is working hard on it, adoption opens soon!">Mira 正在努力开发中，马上就能领养啦</p>
+    <button class="back-btn" onclick="showPage('page-main')" style="margin-top:16px;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3L5 7l4 4"/></svg> <span data-zh="返回菜单" data-en="Back">返回菜单</span></button>
   </div>
 </div>
 
