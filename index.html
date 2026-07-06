@@ -384,6 +384,18 @@
     <p class="sub" id="header-sub" data-zh="你想找我干嘛呢？" data-en="What do you want from me?"></p>
   </div>
 
+  <!-- ===== CARD 0: Adopt DeskMira ===== -->
+  <div class="option-card t-adopt" onclick="showPage('page-adopt')">
+    <div class="card-cat">
+      <img src="deskmira.png" alt="DeskMira" style="object-fit:cover;border-radius:8px;">
+    </div>
+    <div class="card-body">
+      <h3 data-zh="我想领养一只 DeskMira！" data-en="I want to adopt a DeskMira!">我想领养一只 DeskMira！</h3>
+      <p data-zh="桌面猫咪小精灵，陪你工作摸鱼" data-en="Desktop cat sprite, your work buddy">桌面猫咪小精灵，陪你工作摸鱼</p>
+    </div>
+    <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+  </div>
+
   <!-- ===== CARD 1: Coffee Cat ===== -->
   <div class="option-card t-coffee" onclick="showPage('page-coffee')">
     <div class="card-cat">
@@ -444,17 +456,6 @@
     <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
   </div>
 
-  <!-- ===== CARD 6: Adopt DeskMira ===== -->
-  <div class="option-card t-adopt" onclick="showPage('page-adopt')">
-    <div class="card-cat">
-      <span style="font-size:36px;line-height:60px;display:block;text-align:center">🐱</span>
-    </div>
-    <div class="card-body">
-      <h3 data-zh="我想领养一只 DeskMira！" data-en="I want to adopt a DeskMira!">我想领养一只 DeskMira！</h3>
-      <p data-zh="桌面猫咪小精灵，陪你工作摸鱼" data-en="Desktop cat sprite, your work buddy">桌面猫咪小精灵，陪你工作摸鱼</p>
-    </div>
-    <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
-  </div>
 </div>
 
 <!-- ============ COFFEE PAGE ============ -->
@@ -581,7 +582,9 @@
 <!-- ============ ADOPT DESKMIRA PAGE ============ -->
 <div class="page" id="page-adopt">
   <div class="result-wrap" style="position:relative;overflow:hidden;">
-    <div style="font-size:72px;margin-bottom:10px;animation:adoptBounce 2s ease-in-out infinite;">🐱</div>
+    <div class="scene-cat">
+      <img src="deskmira.png" alt="DeskMira" style="border-radius:12px;">
+    </div>
     <h2 data-zh="领养 DeskMira" data-en="Adopt DeskMira">领养 DeskMira</h2>
     <div style="margin:16px auto;padding:16px 20px;background:linear-gradient(135deg,#FFE4EC,#FFF0F5);border-radius:16px;border:1.5px dashed #FF8FAB;max-width:280px;">
       <p style="font-size:13px;color:#FF6B8A;margin-bottom:8px;" data-zh="喵～功能开发中..." data-en="Meow~ Coming soon...">喵～功能开发中...</p>
